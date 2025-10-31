@@ -1,0 +1,23 @@
+config BR2_PACKAGE_YUBICO_PIV_TOOL
+	bool "yubico-piv-tool"
+	depends on BR2_TOOLCHAIN_HAS_THREADS # pcsc-lite
+	depends on BR2_USE_MMU # pcsc-lite
+	depends on !BR2_STATIC_LIBS # shared libykpiv
+	depends on BR2_INSTALL_LIBSTDCPP # needs C++
+	depends on BR2_TOOLCHAIN_GCC_AT_LEAST_4_9 # pcsc-lite requirement
+	select BR2_PACKAGE_OPENSSL
+	select BR2_PACKAGE_PCSC_LITE
+	select BR2_PACKAGE_CHECK
+	select BR2_PACKAGE_ZLIB
+	help
+	  Yubico PIV Tool provides the ykpiv library, PKCS#11 module,
+	  and command-line utilities for managing the Personal Identity
+	  Verification (PIV) applet on YubiKey hardware tokens.
+
+	  https://developers.yubico.com/yubico-piv-tool/
+
+comment "yubico-piv-tool needs a toolchain w/ threads, dynamic library, C++, gcc >= 4.9"
+	depends on BR2_USE_MMU
+	depends on !BR2_TOOLCHAIN_HAS_THREADS || BR2_STATIC_LIBS || \
+		!BR2_TOOLCHAIN_GCC_AT_LEAST_4_9 || \
+		!BR2_INSTALL_LIBSTDCPP

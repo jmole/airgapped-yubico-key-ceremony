@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# pcscd - PC/SC daemon for smart-card access
+#
+
+DAEMON=/usr/sbin/pcscd
+PIDFILE=/var/run/pcscd.pid
+NAME=pcscd
+
+start() {
+	printf "Starting %s: " "$NAME"
+	start-stop-daemon -S -q -m -p "$PIDFILE" --exec "$DAEMON"
+	RET=$?
+	[ $RET -eq 0 ] && echo "OK" || echo "FAIL"
+	return $RET
+}
+
+
+stop() {
+	printf "Stopping %s: " "$NAME"
+	start-stop-daemon -K -q -p "$PIDFILE"
+	RET=$?
+	if [ $RET -eq 0 ]; then
+		rm -f "$PIDFILE"
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+	return $RET
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	status)
+		if [ -f "$PIDFILE" ] && pidof "$DAEMON" >/dev/null 2>&1; then
+			echo "$NAME is running"
+		else
+			echo "$NAME is stopped"
+		fi
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 1
+		;;
+esac
+
+exit $?
