@@ -1,0 +1,32 @@
+name: Build ISO (airgapped-yubico-key-ceremony)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Ensure build script is executable
+        run: chmod +x build.sh
+
+      - name: Build ISO image
+        run: ./build.sh
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iso
+          path: |
+            ./rootfs.iso9660
+          if-no-files-found: error
