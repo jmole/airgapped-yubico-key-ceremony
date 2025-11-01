@@ -1,3 +1,6 @@
 menu "Key ceremony packages"
 	source "$BR2_EXTERNAL_KEYCEREMONY_PATH/package/yubico-piv-tool/Config.in"
+	source "$BR2_EXTERNAL_KEYCEREMONY_PATH/package/python-pyscard/Config.in"
+	source "$BR2_EXTERNAL_KEYCEREMONY_PATH/package/python-fido2/Config.in"
+	source "$BR2_EXTERNAL_KEYCEREMONY_PATH/package/python-yubikey-manager/Config.in"
 endmenu

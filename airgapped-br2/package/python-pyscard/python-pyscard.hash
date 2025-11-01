@@ -1,0 +1,5 @@
+# md5, sha256 from https://pypi.org/pypi/pyscard/json
+md5  b6f04bc4e20b2ef2bc884d6448c717e4  pyscard-2.3.1.tar.gz
+sha256  a24356f57a0a950740b6e54f51f819edd5296ee8892a6625b0da04724e9e6c13  pyscard-2.3.1.tar.gz
+# Locally computed sha256 checksums
+sha256  72b672113d642cbb8ef5dcc76938db801983c56e50b1400ab930f1a64d6dc8d9  LICENSE

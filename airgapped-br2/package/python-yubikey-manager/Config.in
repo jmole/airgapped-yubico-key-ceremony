@@ -1,0 +1,12 @@
+config BR2_PACKAGE_PYTHON_YUBIKEY_MANAGER
+	bool "python-yubikey-manager"
+	select BR2_PACKAGE_PYTHON_CLICK # runtime
+	select BR2_PACKAGE_PYTHON_CRYPTOGRAPHY # runtime
+	select BR2_PACKAGE_PYTHON_FIDO2 # runtime
+	select BR2_PACKAGE_PYTHON_KEYRING # runtime
+	select BR2_PACKAGE_PYTHON_PYSCARD # runtime
+	select BR2_PACKAGE_PYTHON_PYWIN32 # runtime
+	help
+	  Library and CLI for managing your YubiKey configuration.
+
+	  https://github.com/Yubico/yubikey-manager

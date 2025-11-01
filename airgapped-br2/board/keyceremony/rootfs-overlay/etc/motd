@@ -1,0 +1,22 @@
+Airgapped Key Ceremony Buildroot Image
+
+Primary workflow:
+
+  1) Connect YubiKey and printer (usblp).
+  2) Run: ./rsa-keygen.sh
+  3) Mount USB media: ./mount-usb.sh
+
+Networking is disabled by default.
+Verify airgap (simple checks):
+
+  Interfaces/routing:
+    ip a
+    ip r
+  Open sockets:
+    netstat
+  Root fs is tmpfs:
+    df -hT
+  See all devices:
+    find /sys/class
+
+

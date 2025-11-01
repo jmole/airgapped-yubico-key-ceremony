@@ -1,3 +1,11 @@
+# ACPI
+CONFIG_ACPI=y
+CONFIG_ACPI_BUTTON=y
+CONFIG_ACPI_VIDEO=y
+CONFIG_ACPI_PROCESSOR=y
+CONFIG_PNP=y
+CONFIG_PNPACPI=y
+
 # Ensure the kernel supports initramfs booting with the expected storage drivers.
 CONFIG_BLK_DEV_INITRD=y
 CONFIG_INITRAMFS_SOURCE=""
@@ -17,6 +25,7 @@ CONFIG_EFI_STUB=y
 # Core storage devices commonly found in modern laptops and desktops.
 CONFIG_PCI=y
 CONFIG_PCI_MSI=y
+CONFIG_IRQ_REMAP=y
 CONFIG_ATA=y
 CONFIG_SATA_AHCI=y
 CONFIG_ATA_PIIX=y
@@ -39,6 +48,12 @@ CONFIG_USB_UHCI_HCD=y
 CONFIG_USB_OHCI_HCD=y
 CONFIG_USB_STORAGE=y
 CONFIG_USB_PRINTER=y
+
+# USB Type-C / role switch / Thunderbolt & USB4 support for modern laptops
+CONFIG_TYPEC=y
+CONFIG_USB_ROLE_SWITCH=y
+CONFIG_USB4=y
+CONFIG_THUNDERBOLT=y
 
 # Input and console so the TTY works everywhere.
 CONFIG_INPUT_EVDEV=y
@@ -66,9 +81,849 @@ CONFIG_EXT4_USE_FOR_EXT2=y
 CONFIG_EXT4_FS_POSIX_ACL=y
 CONFIG_EXT4_FS_SECURITY=y
 CONFIG_TMPFS_POSIX_ACL=y
+# exFAT filesystem support
+CONFIG_EXFAT_FS=y
+CONFIG_EXFAT_DEFAULT_IOCHARSET="utf8"
+
+# NLS needed by exFAT
+CONFIG_NLS=y
+CONFIG_NLS_DEFAULT="utf8"
+CONFIG_NLS_CODEPAGE_437=y
+CONFIG_NLS_UTF8=y
+
+# GPIO / Pin control / Intel LPSS and I2C
+CONFIG_GPIOLIB=y
+CONFIG_PINCTRL=y
+CONFIG_MFD_INTEL_LPSS_ACPI=y
+CONFIG_MFD_INTEL_LPSS_PCI=y
+CONFIG_I2C_DESIGNWARE_CORE=y
 
 # Drop wireless/network extras; this environment is offline-only.
 # CONFIG_CFG80211 is not set
 # CONFIG_MAC80211 is not set
 # CONFIG_WIRELESS is not set
 # CONFIG_BT is not set
+CONFIG_IPV6_SIT=n
+
+# CPU frequency scaling and Intel power management (Lunar Lake needs intel_pstate/HWP)
+CONFIG_CPU_FREQ=y
+CONFIG_CPU_FREQ_STAT=y
+CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
+CONFIG_CPU_FREQ_GOV_PERFORMANCE=y
+CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y
+CONFIG_X86_INTEL_PSTATE=y
+# CONFIG_INTEL_IDLE is not set
+
+
+# High Precision Event Timer for stable timers on modern PCs
+CONFIG_HPET_TIMER=y
+
+# AMD platforms: enable AMD P-state (CPPC) and useful support drivers
+CONFIG_X86_AMD_PSTATE=y
+CONFIG_ACPI_CPPC_LIB=y
+CONFIG_X86_ACPI_CPUFREQ=y
+CONFIG_AMD_PMC=y
+CONFIG_HW_RANDOM_AMD=y
+
+# Intel platforms: enable Intel HWRNG and allow trusting CPU RNG for early boot
+CONFIG_HW_RANDOM_INTEL=y
+CONFIG_HW_RANDOM_TPM=y
+CONFIG_RANDOM_TRUST_CPU=y
+
+# Early microcode loading (improves stability/perf on new Intel/AMD CPUs)
+CONFIG_MICROCODE=y
+CONFIG_MICROCODE_INTEL=y
+CONFIG_MICROCODE_AMD=y
+CONFIG_MICROCODE_EARLY=y
+
+# PCIe ASPM (power/perf; can reduce device init latency on some laptops)
+CONFIG_PCIEASPM=y
+CONFIG_PCIEASPM_DEFAULT=y
+
+
+
+# Disabling sound stuff:
+# sound/core/Kconfig
+CONFIG_SND_CTL_FAST_LOOKUP=n
+CONFIG_SND_DMA_SGBUF=n
+CONFIG_SND_JACK=n
+CONFIG_SND_JACK_INPUT_DEV=n
+CONFIG_SND_PCM_TIMER=n
+CONFIG_SND_PROC_FS=n
+CONFIG_SND_SUPPORT_OLD_API=n
+CONFIG_SND_VERBOSE_PROCFS=n
+CONFIG_SND_VMASTER=n
+
+# sound/core/seq/Kconfig
+CONFIG_SND_SEQ_HRTIMER_DEFAULT=n
+
+# sound/drivers/Kconfig
+CONFIG_SND_DRIVERS=n
+
+# sound/hda/Kconfig
+CONFIG_SND_HDA_COMPONENT=n
+CONFIG_SND_HDA_I915=n
+CONFIG_SND_INTEL_NHLT=n
+
+# sound/pci/Kconfig
+CONFIG_SND_PCI=n
+
+# sound/pci/hda/Kconfig
+CONFIG_SND_HDA_HWDEP=n
+
+# sound/pcmcia/Kconfig
+CONFIG_SND_PCMCIA=n
+
+# sound/usb/Kconfig
+CONFIG_SND_USB=n
+
+# sound/x86/Kconfig
+CONFIG_SND_X86=n
+
+
+# Disable net drivers:
+
+# drivers/net/Kconfig
+CONFIG_NETDEVICES=n
+CONFIG_NETPOLL=n
+CONFIG_NET_CORE=n
+CONFIG_NET_POLL_CONTROLLER=n
+
+# drivers/net/ethernet/3com/Kconfig
+CONFIG_NET_VENDOR_3COM=n
+
+# drivers/net/ethernet/8390/Kconfig
+CONFIG_NET_VENDOR_8390=n
+
+# drivers/net/ethernet/Kconfig
+CONFIG_ETHERNET=n
+
+# drivers/net/ethernet/adaptec/Kconfig
+CONFIG_NET_VENDOR_ADAPTEC=n
+
+# drivers/net/ethernet/agere/Kconfig
+CONFIG_NET_VENDOR_AGERE=n
+
+# drivers/net/ethernet/alacritech/Kconfig
+CONFIG_NET_VENDOR_ALACRITECH=n
+
+# drivers/net/ethernet/alteon/Kconfig
+CONFIG_NET_VENDOR_ALTEON=n
+
+# drivers/net/ethernet/amazon/Kconfig
+CONFIG_NET_VENDOR_AMAZON=n
+
+# drivers/net/ethernet/amd/Kconfig
+CONFIG_NET_VENDOR_AMD=n
+
+# drivers/net/ethernet/aquantia/Kconfig
+CONFIG_NET_VENDOR_AQUANTIA=n
+
+# drivers/net/ethernet/asix/Kconfig
+CONFIG_NET_VENDOR_ASIX=n
+
+# drivers/net/ethernet/atheros/Kconfig
+CONFIG_NET_VENDOR_ATHEROS=n
+
+# drivers/net/ethernet/broadcom/Kconfig
+CONFIG_NET_VENDOR_BROADCOM=n
+CONFIG_TIGON3_HWMON=n
+
+# drivers/net/ethernet/brocade/Kconfig
+CONFIG_NET_VENDOR_BROCADE=n
+
+# drivers/net/ethernet/cadence/Kconfig
+CONFIG_NET_VENDOR_CADENCE=n
+
+# drivers/net/ethernet/cavium/Kconfig
+CONFIG_NET_VENDOR_CAVIUM=n
+
+# drivers/net/ethernet/chelsio/Kconfig
+CONFIG_NET_VENDOR_CHELSIO=n
+
+# drivers/net/ethernet/cisco/Kconfig
+CONFIG_NET_VENDOR_CISCO=n
+
+# drivers/net/ethernet/cortina/Kconfig
+CONFIG_NET_VENDOR_CORTINA=n
+
+# drivers/net/ethernet/davicom/Kconfig
+CONFIG_NET_VENDOR_DAVICOM=n
+
+# drivers/net/ethernet/dec/Kconfig
+CONFIG_NET_VENDOR_DEC=n
+
+# drivers/net/ethernet/dec/tulip/Kconfig
+CONFIG_NET_TULIP=n
+
+# drivers/net/ethernet/dlink/Kconfig
+CONFIG_NET_VENDOR_DLINK=n
+
+# drivers/net/ethernet/emulex/Kconfig
+CONFIG_NET_VENDOR_EMULEX=n
+
+# drivers/net/ethernet/engleder/Kconfig
+CONFIG_NET_VENDOR_ENGLEDER=n
+
+# drivers/net/ethernet/ezchip/Kconfig
+CONFIG_NET_VENDOR_EZCHIP=n
+
+# drivers/net/ethernet/fujitsu/Kconfig
+CONFIG_NET_VENDOR_FUJITSU=n
+
+# drivers/net/ethernet/fungible/Kconfig
+CONFIG_NET_VENDOR_FUNGIBLE=n
+
+# drivers/net/ethernet/google/Kconfig
+CONFIG_NET_VENDOR_GOOGLE=n
+
+# drivers/net/ethernet/huawei/Kconfig
+CONFIG_NET_VENDOR_HUAWEI=n
+
+# drivers/net/ethernet/i825xx/Kconfig
+CONFIG_NET_VENDOR_I825XX=n
+
+# drivers/net/ethernet/intel/Kconfig
+CONFIG_E1000E_HWTS=n
+CONFIG_NET_VENDOR_INTEL=n
+
+# drivers/net/ethernet/litex/Kconfig
+CONFIG_NET_VENDOR_LITEX=n
+
+# drivers/net/ethernet/marvell/Kconfig
+CONFIG_NET_VENDOR_MARVELL=n
+
+# drivers/net/ethernet/mellanox/Kconfig
+CONFIG_NET_VENDOR_MELLANOX=n
+
+# drivers/net/ethernet/meta/Kconfig
+CONFIG_NET_VENDOR_META=n
+
+# drivers/net/ethernet/micrel/Kconfig
+CONFIG_NET_VENDOR_MICREL=n
+
+# drivers/net/ethernet/microchip/Kconfig
+CONFIG_NET_VENDOR_MICROCHIP=n
+
+# drivers/net/ethernet/microsoft/Kconfig
+CONFIG_NET_VENDOR_MICROSOFT=n
+
+# drivers/net/ethernet/mscc/Kconfig
+CONFIG_NET_VENDOR_MICROSEMI=n
+
+# drivers/net/ethernet/myricom/Kconfig
+CONFIG_NET_VENDOR_MYRI=n
+
+# drivers/net/ethernet/natsemi/Kconfig
+CONFIG_NET_VENDOR_NATSEMI=n
+
+# drivers/net/ethernet/neterion/Kconfig
+CONFIG_NET_VENDOR_NETERION=n
+
+# drivers/net/ethernet/netronome/Kconfig
+CONFIG_NET_VENDOR_NETRONOME=n
+
+# drivers/net/ethernet/ni/Kconfig
+CONFIG_NET_VENDOR_NI=n
+
+# drivers/net/ethernet/nvidia/Kconfig
+CONFIG_NET_VENDOR_NVIDIA=n
+
+# drivers/net/ethernet/oki-semi/Kconfig
+CONFIG_NET_VENDOR_OKI=n
+
+# drivers/net/ethernet/packetengines/Kconfig
+CONFIG_NET_VENDOR_PACKET_ENGINES=n
+
+# drivers/net/ethernet/pensando/Kconfig
+CONFIG_NET_VENDOR_PENSANDO=n
+
+# drivers/net/ethernet/qlogic/Kconfig
+CONFIG_NET_VENDOR_QLOGIC=n
+
+# drivers/net/ethernet/qualcomm/Kconfig
+CONFIG_NET_VENDOR_QUALCOMM=n
+
+# drivers/net/ethernet/rdc/Kconfig
+CONFIG_NET_VENDOR_RDC=n
+
+# drivers/net/ethernet/realtek/Kconfig
+CONFIG_NET_VENDOR_REALTEK=n
+
+# drivers/net/ethernet/renesas/Kconfig
+CONFIG_NET_VENDOR_RENESAS=n
+
+# drivers/net/ethernet/rocker/Kconfig
+CONFIG_NET_VENDOR_ROCKER=n
+
+# drivers/net/ethernet/samsung/Kconfig
+CONFIG_NET_VENDOR_SAMSUNG=n
+
+# drivers/net/ethernet/sfc/Kconfig
+CONFIG_NET_VENDOR_SOLARFLARE=n
+
+# drivers/net/ethernet/silan/Kconfig
+CONFIG_NET_VENDOR_SILAN=n
+
+# drivers/net/ethernet/sis/Kconfig
+CONFIG_NET_VENDOR_SIS=n
+
+# drivers/net/ethernet/smsc/Kconfig
+CONFIG_NET_VENDOR_SMSC=n
+
+# drivers/net/ethernet/socionext/Kconfig
+CONFIG_NET_VENDOR_SOCIONEXT=n
+
+# drivers/net/ethernet/stmicro/Kconfig
+CONFIG_NET_VENDOR_STMICRO=n
+
+# drivers/net/ethernet/sun/Kconfig
+CONFIG_NET_VENDOR_SUN=n
+
+# drivers/net/ethernet/synopsys/Kconfig
+CONFIG_NET_VENDOR_SYNOPSYS=n
+
+# drivers/net/ethernet/tehuti/Kconfig
+CONFIG_NET_VENDOR_TEHUTI=n
+
+# drivers/net/ethernet/ti/Kconfig
+CONFIG_NET_VENDOR_TI=n
+
+# drivers/net/ethernet/vertexcom/Kconfig
+CONFIG_NET_VENDOR_VERTEXCOM=n
+
+# drivers/net/ethernet/via/Kconfig
+CONFIG_NET_VENDOR_VIA=n
+
+# drivers/net/ethernet/wangxun/Kconfig
+CONFIG_NET_VENDOR_WANGXUN=n
+
+# drivers/net/ethernet/wiznet/Kconfig
+CONFIG_NET_VENDOR_WIZNET=n
+
+# drivers/net/ethernet/xilinx/Kconfig
+CONFIG_NET_VENDOR_XILINX=n
+
+# drivers/net/ethernet/xircom/Kconfig
+CONFIG_NET_VENDOR_XIRCOM=n
+
+# drivers/net/phy/Kconfig
+CONFIG_SWPHY=n
+
+# drivers/net/wireless/Kconfig
+CONFIG_WLAN=n
+
+# drivers/net/wireless/admtek/Kconfig
+CONFIG_WLAN_VENDOR_ADMTEK=n
+
+# drivers/net/wireless/ath/Kconfig
+CONFIG_WLAN_VENDOR_ATH=n
+
+# drivers/net/wireless/atmel/Kconfig
+CONFIG_WLAN_VENDOR_ATMEL=n
+
+# drivers/net/wireless/broadcom/Kconfig
+CONFIG_WLAN_VENDOR_BROADCOM=n
+
+# drivers/net/wireless/intel/Kconfig
+CONFIG_WLAN_VENDOR_INTEL=n
+
+# drivers/net/wireless/intersil/Kconfig
+CONFIG_WLAN_VENDOR_INTERSIL=n
+
+# drivers/net/wireless/marvell/Kconfig
+CONFIG_WLAN_VENDOR_MARVELL=n
+
+# drivers/net/wireless/mediatek/Kconfig
+CONFIG_WLAN_VENDOR_MEDIATEK=n
+
+# drivers/net/wireless/microchip/Kconfig
+CONFIG_WLAN_VENDOR_MICROCHIP=n
+
+# drivers/net/wireless/purelifi/Kconfig
+CONFIG_WLAN_VENDOR_PURELIFI=n
+
+# drivers/net/wireless/quantenna/Kconfig
+CONFIG_WLAN_VENDOR_QUANTENNA=n
+
+# drivers/net/wireless/ralink/Kconfig
+CONFIG_WLAN_VENDOR_RALINK=n
+
+# drivers/net/wireless/realtek/Kconfig
+CONFIG_WLAN_VENDOR_REALTEK=n
+
+# drivers/net/wireless/rsi/Kconfig
+CONFIG_WLAN_VENDOR_RSI=n
+
+# drivers/net/wireless/silabs/Kconfig
+CONFIG_WLAN_VENDOR_SILABS=n
+
+# drivers/net/wireless/st/Kconfig
+CONFIG_WLAN_VENDOR_ST=n
+
+# drivers/net/wireless/zydas/Kconfig
+CONFIG_WLAN_VENDOR_ZYDAS=n
+
+
+
+# Copied the rest from debian linux-image-6.12.48+deb13-amd64 to get this booting on real hardware
+
+# arch/Kconfig
+CONFIG_ARCH_HAS_CC_PLATFORM=y
+CONFIG_ARCH_HAS_DMA_OPS=y
+CONFIG_ARCH_WANT_PMD_MKWRITE=y
+CONFIG_CC_HAS_MIN_FUNCTION_ALIGNMENT=y
+CONFIG_CC_HAS_SANE_FUNCTION_ALIGNMENT=y
+CONFIG_HAVE_ARCH_NODE_DEV_GROUP=y
+CONFIG_ISA_BUS_API=y
+CONFIG_KPROBES_ON_FTRACE=y
+CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT=y
+CONFIG_USER_RETURN_NOTIFIER=y
+
+# arch/x86/Kconfig
+CONFIG_AMD_MEM_ENCRYPT=y
+CONFIG_ARCH_SELECTS_KEXEC_FILE=y
+CONFIG_DYNAMIC_PHYSICAL_MASK=y
+CONFIG_GART_IOMMU=y
+CONFIG_INTEL_TDX_GUEST=y
+CONFIG_MAXSMP=y
+CONFIG_MITIGATION_SLS=y
+CONFIG_MITIGATION_VMSCAPE=y
+CONFIG_MTRR_SANITIZER=y
+CONFIG_PARAVIRT_SPINLOCKS=y
+CONFIG_PARAVIRT_XXL=y
+CONFIG_PCI_XEN=y
+CONFIG_PVH=y
+CONFIG_X86_AMD_PLATFORM_DEVICE=y
+CONFIG_X86_CPU_RESCTRL=y
+CONFIG_X86_INTEL_LPSS=y
+CONFIG_X86_MEM_ENCRYPT=y
+CONFIG_X86_PMEM_LEGACY_DEVICE=y
+CONFIG_X86_SGX=y
+CONFIG_X86_USER_SHADOW_STACK=y
+CONFIG_X86_X2APIC=y
+CONFIG_X86_X32_ABI=y
+
+# arch/x86/crypto/Kconfig
+CONFIG_CRYPTO_BLAKE2S_X86=y
+
+# arch/x86/ras/Kconfig
+CONFIG_RAS_CEC=y
+
+# crypto/Kconfig
+CONFIG_CRYPTO_CRC64_ROCKSOFT=y
+CONFIG_CRYPTO_CRCT10DIF=y
+CONFIG_CRYPTO_DH=y
+CONFIG_CRYPTO_DH_RFC7919_GROUPS=y
+CONFIG_CRYPTO_DRBG_CTR=y
+CONFIG_CRYPTO_DRBG_HASH=y
+CONFIG_CRYPTO_ECC=y
+CONFIG_CRYPTO_ECDH=y
+CONFIG_CRYPTO_ECDSA=y
+CONFIG_CRYPTO_FIPS=y
+CONFIG_CRYPTO_JITTERENTROPY_MEMSIZE_2=y
+CONFIG_CRYPTO_KDF800108_CTR=y
+CONFIG_CRYPTO_KPP=y
+CONFIG_CRYPTO_SHA1=y
+
+# drivers/acpi/Kconfig
+CONFIG_ACPI_ADXL=y
+CONFIG_ACPI_EC_DEBUGFS=y
+CONFIG_ACPI_EXTLOG=y
+CONFIG_ACPI_HED=y
+CONFIG_ACPI_HOTPLUG_MEMORY=y
+CONFIG_ACPI_PCI_SLOT=y
+CONFIG_ACPI_TABLE_LIB=y
+CONFIG_ACPI_VIOT=y
+CONFIG_ACPI_WATCHDOG=y
+
+# drivers/acpi/apei/Kconfig
+CONFIG_ACPI_APEI=y
+CONFIG_ACPI_APEI_GHES=y
+CONFIG_ACPI_APEI_MEMORY_FAILURE=y
+CONFIG_ACPI_APEI_PCIEAER=y
+
+# drivers/acpi/numa/Kconfig
+CONFIG_ACPI_HMAT=y
+
+# drivers/acpi/pmic/Kconfig
+CONFIG_BXT_WC_PMIC_OPREGION=y
+CONFIG_BYTCRC_PMIC_OPREGION=y
+CONFIG_CHTCRC_PMIC_OPREGION=y
+CONFIG_CHT_DC_TI_PMIC_OPREGION=y
+CONFIG_CHT_WC_PMIC_OPREGION=y
+CONFIG_PMIC_OPREGION=y
+CONFIG_XPOWER_PMIC_OPREGION=y
+
+
+# drivers/char/agp/Kconfig
+CONFIG_AGP_SIS=y
+CONFIG_AGP_VIA=y
+
+# drivers/char/tpm/Kconfig
+CONFIG_HW_RANDOM_TPM=y
+CONFIG_TCG_CRB=y
+CONFIG_TCG_TIS=y
+CONFIG_TCG_TIS_CORE=y
+CONFIG_TCG_TIS_SPI_CR50=y
+CONFIG_TCG_TPM=y
+CONFIG_TCG_TPM2_HMAC=y
+
+# drivers/cpufreq/Kconfig
+CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL=y
+
+# drivers/cpuidle/Kconfig
+CONFIG_CPU_IDLE_GOV_LADDER=y
+
+# drivers/crypto/Kconfig
+CONFIG_CRYPTO_DEV_CCP=y
+
+# drivers/crypto/ccp/Kconfig
+CONFIG_CRYPTO_DEV_SP_CCP=y
+CONFIG_CRYPTO_DEV_SP_PSP=y
+
+# drivers/devfreq/Kconfig
+CONFIG_PM_DEVFREQ=y
+
+# drivers/dma-buf/Kconfig
+CONFIG_DMABUF_HEAPS=y
+CONFIG_UDMABUF=y
+
+# drivers/dma-buf/heaps/Kconfig
+CONFIG_DMABUF_HEAPS_SYSTEM=y
+
+# drivers/dpll/Kconfig
+CONFIG_DPLL=y
+
+# drivers/firmware/efi/Kconfig
+CONFIG_EFI_EMBEDDED_FIRMWARE=y
+CONFIG_EFI_SOFT_RESERVE=y
+CONFIG_RESET_ATTACK_MITIGATION=y
+CONFIG_UEFI_CPER=y
+CONFIG_UEFI_CPER_X86=y
+CONFIG_UNACCEPTED_MEMORY=y
+
+# drivers/gpu/drm/amd/amdgpu/Kconfig
+CONFIG_DRM_AMDGPU_CIK=y
+CONFIG_DRM_AMDGPU_SI=y
+
+# drivers/gpu/drm/amd/display/Kconfig
+CONFIG_DRM_AMD_DC=y
+CONFIG_DRM_AMD_DC_FP=y
+CONFIG_DRM_AMD_DC_SI=y
+
+# drivers/gpu/drm/xe/Kconfig
+CONFIG_DRM_XE_DISPLAY=y
+
+# drivers/i2c/busses/Kconfig
+CONFIG_I2C_DESIGNWARE_BAYTRAIL=y
+
+# drivers/idle/Kconfig
+CONFIG_INTEL_IDLE=y
+
+# drivers/memory/Kconfig
+CONFIG_MEMORY=y
+
+# drivers/mfd/Kconfig
+CONFIG_INTEL_SOC_PMIC=y
+CONFIG_INTEL_SOC_PMIC_CHTWC=y
+CONFIG_MFD_SYSCON=y
+
+# drivers/opp/Kconfig
+CONFIG_PM_OPP=y
+
+# drivers/pci/Kconfig
+CONFIG_PCIE_BUS_DEFAULT=y
+CONFIG_PCI_DOE=y
+CONFIG_PCI_IOV=y
+CONFIG_PCI_REALLOC_ENABLE_AUTO=y
+
+# drivers/pci/hotplug/Kconfig
+CONFIG_HOTPLUG_PCI_ACPI=y
+
+# drivers/pci/pcie/Kconfig
+CONFIG_HOTPLUG_PCI_PCIE=y
+CONFIG_PCIEAER=y
+CONFIG_PCIEAER_CXL=y
+CONFIG_PCIE_DPC=y
+CONFIG_PCIE_PTM=y
+
+# drivers/phy/Kconfig
+CONFIG_GENERIC_PHY=y
+
+# drivers/pinctrl/Kconfig
+CONFIG_GENERIC_PINCONF=y
+CONFIG_PINCONF=y
+CONFIG_PINCTRL_AMD=y
+CONFIG_PINMUX=y
+
+# drivers/pinctrl/intel/Kconfig
+CONFIG_PINCTRL_BAYTRAIL=y
+CONFIG_PINCTRL_BROXTON=y
+CONFIG_PINCTRL_CANNONLAKE=y
+CONFIG_PINCTRL_CEDARFORK=y
+CONFIG_PINCTRL_CHERRYVIEW=y
+CONFIG_PINCTRL_DENVERTON=y
+CONFIG_PINCTRL_GEMINILAKE=y
+CONFIG_PINCTRL_ICELAKE=y
+CONFIG_PINCTRL_INTEL=y
+CONFIG_PINCTRL_LEWISBURG=y
+CONFIG_PINCTRL_SUNRISEPOINT=y
+CONFIG_PINCTRL_TIGERLAKE=y
+
+# drivers/platform/x86/Kconfig
+CONFIG_INTEL_SCU_IPC=y
+CONFIG_SONYPI_COMPAT=y
+CONFIG_THINKPAD_ACPI_ALSA_SUPPORT=y
+CONFIG_THINKPAD_ACPI_HOTKEY_POLL=y
+CONFIG_THINKPAD_ACPI_VIDEO=y
+CONFIG_TOUCHSCREEN_DMI=y
+
+# drivers/platform/x86/dell/Kconfig
+CONFIG_DELL_SMBIOS_SMM=y
+CONFIG_DELL_SMBIOS_WMI=y
+CONFIG_X86_PLATFORM_DRIVERS_DELL=y
+
+# drivers/platform/x86/hp/Kconfig
+CONFIG_X86_PLATFORM_DRIVERS_HP=y
+
+# drivers/platform/x86/intel/Kconfig
+CONFIG_INTEL_TURBO_MAX_3=y
+
+# drivers/platform/x86/intel/atomisp2/Kconfig
+CONFIG_INTEL_ATOMISP2_PDX86=y
+
+# drivers/platform/x86/intel/wmi/Kconfig
+CONFIG_INTEL_WMI=y
+
+# drivers/powercap/Kconfig
+CONFIG_IDLE_INJECT=y
+CONFIG_POWERCAP=y
+
+# drivers/regulator/Kconfig
+CONFIG_REGULATOR=y
+
+# drivers/reset/Kconfig
+CONFIG_RESET_CONTROLLER=y
+
+# drivers/rtc/Kconfig
+CONFIG_RTC_HCTOSYS=y
+
+# drivers/spi/Kconfig
+CONFIG_SPI=y
+CONFIG_SPI_DYNAMIC=y
+CONFIG_SPI_MASTER=y
+CONFIG_SPI_MEM=y
+CONFIG_SPI_SPIDEV=y
+
+# drivers/thermal/Kconfig
+CONFIG_DEVFREQ_THERMAL=y
+CONFIG_THERMAL_GOV_BANG_BANG=y
+CONFIG_THERMAL_GOV_FAIR_SHARE=y
+CONFIG_THERMAL_GOV_POWER_ALLOCATOR=y
+CONFIG_THERMAL_NETLINK=y
+CONFIG_THERMAL_STATISTICS=y
+
+# drivers/thermal/intel/Kconfig
+CONFIG_INTEL_HFI_THERMAL=y
+
+# drivers/video/Kconfig
+CONFIG_VIDEOMODE_HELPERS=y
+
+# drivers/video/console/Kconfig
+CONFIG_FRAMEBUFFER_CONSOLE_ROTATION=y
+
+# drivers/video/fbdev/Kconfig
+CONFIG_FB_3DFX_I2C=y
+CONFIG_FB_ATY128_BACKLIGHT=y
+CONFIG_FB_ATY_BACKLIGHT=y
+CONFIG_FB_ATY_CT=y
+CONFIG_FB_ATY_GX=y
+CONFIG_FB_CYBER2000_DDC=y
+CONFIG_FB_MATROX_G=y
+CONFIG_FB_MATROX_MILLENIUM=y
+CONFIG_FB_MATROX_MYSTIQUE=y
+CONFIG_FB_MB862XX_I2C=y
+CONFIG_FB_MB862XX_PCI_GDC=y
+CONFIG_FB_PM2_FIFO_DISCONNECT=y
+CONFIG_FB_RADEON_BACKLIGHT=y
+CONFIG_FB_RADEON_I2C=y
+CONFIG_FB_S3_DDC=y
+CONFIG_FB_SIMPLE=y
+CONFIG_FB_SIS_300=y
+CONFIG_FB_SIS_315=y
+CONFIG_FB_VIA_X_COMPATIBILITY=y
+CONFIG_XEN_FBDEV_FRONTEND=y
+
+# drivers/video/fbdev/core/Kconfig
+CONFIG_FB_MODE_HELPERS=y
+CONFIG_FB_TILEBLITTING=y
+CONFIG_FIRMWARE_EDID=y
+
+# drivers/watchdog/Kconfig
+CONFIG_HPWDT_NMI_DECODING=y
+CONFIG_ITCO_VENDOR_SUPPORT=y
+CONFIG_WATCHDOG_HRTIMER_PRETIMEOUT=y
+CONFIG_WATCHDOG_PRETIMEOUT_DEFAULT_GOV_NOOP=y
+CONFIG_WATCHDOG_PRETIMEOUT_GOV=y
+CONFIG_WATCHDOG_SYSFS=y
+
+# kernel/irq/Kconfig
+CONFIG_GENERIC_IRQ_CHIP=y
+
+# kernel/power/Kconfig
+CONFIG_ENERGY_MODEL=y
+CONFIG_PM_ADVANCED_DEBUG=y
+CONFIG_PM_GENERIC_DOMAINS=y
+CONFIG_PM_GENERIC_DOMAINS_SLEEP=y
+
+# lib/Kconfig
+CONFIG_BTREE=y
+CONFIG_CLOSURES=y
+CONFIG_CPUMASK_OFFSTACK=y
+CONFIG_CRC64=y
+CONFIG_CRC64_ROCKSOFT=y
+CONFIG_CRC_T10DIF=y
+CONFIG_IOMMU_HELPER=y
+CONFIG_IRQ_POLL=y
+CONFIG_LINEAR_RANGES=y
+CONFIG_MEMREGION=y
+CONFIG_PLDMFW=y
+CONFIG_RAID6_PQ_BENCHMARK=y
+CONFIG_REED_SOLOMON_DEC16=y
+CONFIG_REED_SOLOMON_DEC8=y
+CONFIG_REED_SOLOMON_ENC8=y
+CONFIG_SIGNATURE=y
+CONFIG_TEXTSEARCH=y
+CONFIG_ZSTD_COMPRESS=y
+
+# lib/crypto/Kconfig
+CONFIG_CRYPTO_ARCH_HAVE_LIB_BLAKE2S=y
+CONFIG_CRYPTO_ARCH_HAVE_LIB_CHACHA=y
+CONFIG_CRYPTO_ARCH_HAVE_LIB_CURVE25519=y
+CONFIG_CRYPTO_ARCH_HAVE_LIB_POLY1305=y
+CONFIG_CRYPTO_LIB_AESCFB=y
+
+# lib/fonts/Kconfig
+CONFIG_FONTS=y
+CONFIG_FONT_TER16x32=y
+
+# mm/Kconfig
+CONFIG_ARCH_ENABLE_MEMORY_HOTREMOVE=y
+CONFIG_ARCH_ENABLE_THP_MIGRATION=y
+CONFIG_ARCH_HAS_ZONE_DMA_SET=y
+CONFIG_ARCH_SUPPORTS_HUGE_PFNMAP=y
+CONFIG_ARCH_SUPPORTS_PMD_PFNMAP=y
+CONFIG_ARCH_SUPPORTS_PUD_PFNMAP=y
+CONFIG_BALLOON_COMPACTION=y
+CONFIG_CONTIG_ALLOC=y
+CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
+CONFIG_DEVICE_MIGRATION=y
+CONFIG_GET_FREE_REGION=y
+CONFIG_HAVE_ARCH_USERFAULTFD_MINOR=y
+CONFIG_HAVE_ARCH_USERFAULTFD_WP=y
+CONFIG_HAVE_BOOTMEM_INFO_NODE=y
+CONFIG_HMM_MIRROR=y
+CONFIG_KSM=y
+CONFIG_LRU_GEN=y
+CONFIG_LRU_GEN_ENABLED=y
+CONFIG_LRU_GEN_WALKS_MMU=y
+CONFIG_MAPPING_DIRTY_HELPERS=y
+CONFIG_MEMORY_BALLOON=y
+CONFIG_MEMORY_FAILURE=y
+CONFIG_MEMORY_HOTPLUG=y
+CONFIG_MEMORY_HOTPLUG_DEFAULT_ONLINE=y
+CONFIG_MEMORY_HOTREMOVE=y
+CONFIG_MEMORY_ISOLATION=y
+CONFIG_MEM_SOFT_DIRTY=y
+CONFIG_MHP_MEMMAP_ON_MEMORY=y
+CONFIG_NUMA_EMU=y
+CONFIG_NUMA_KEEP_MEMINFO=y
+CONFIG_PAGE_IDLE_FLAG=y
+CONFIG_PAGE_REPORTING=y
+CONFIG_PTE_MARKER_UFFD_WP=y
+CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
+CONFIG_SLAB_BUCKETS=y
+CONFIG_SLAB_FREELIST_HARDENED=y
+CONFIG_SLAB_FREELIST_RANDOM=y
+CONFIG_THP_SWAP=y
+CONFIG_TRANSPARENT_HUGEPAGE=y
+CONFIG_TRANSPARENT_HUGEPAGE_ALWAYS=y
+CONFIG_USERFAULTFD=y
+CONFIG_ZBUD=y
+CONFIG_ZONE_DEVICE=y
+CONFIG_ZPOOL=y
+CONFIG_ZSMALLOC=y
+CONFIG_ZSWAP=y
+CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZO=y
+CONFIG_ZSWAP_ZPOOL_DEFAULT_ZSMALLOC=y
+
+# mm/Kconfig.debug
+CONFIG_PAGE_EXTENSION=y
+CONFIG_PAGE_POISONING=y
+
+# security/Kconfig
+CONFIG_FORTIFY_SOURCE=y
+CONFIG_HARDENED_USERCOPY=y
+CONFIG_INTEL_TXT=y
+CONFIG_SECURITYFS=y
+CONFIG_SECURITY_DMESG_RESTRICT=y
+CONFIG_SECURITY_NETWORK_XFRM=y
+CONFIG_SECURITY_PATH=y
+
+# security/Kconfig.hardening
+CONFIG_BUG_ON_DATA_CORRUPTION=y
+CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y
+CONFIG_LIST_HARDENED=y
+
+# security/apparmor/Kconfig
+CONFIG_SECURITY_APPARMOR=y
+CONFIG_SECURITY_APPARMOR_EXPORT_BINARY=y
+CONFIG_SECURITY_APPARMOR_HASH=y
+CONFIG_SECURITY_APPARMOR_HASH_DEFAULT=y
+CONFIG_SECURITY_APPARMOR_INTROSPECT_POLICY=y
+CONFIG_SECURITY_APPARMOR_PARANOID_LOAD=y
+
+# security/integrity/Kconfig
+CONFIG_INTEGRITY_ASYMMETRIC_KEYS=y
+CONFIG_INTEGRITY_MACHINE_KEYRING=y
+CONFIG_INTEGRITY_PLATFORM_KEYRING=y
+CONFIG_INTEGRITY_SIGNATURE=y
+CONFIG_LOAD_UEFI_KEYS=y
+
+# security/integrity/evm/Kconfig
+CONFIG_EVM=y
+CONFIG_EVM_ATTR_FSUUID=y
+
+# security/integrity/ima/Kconfig
+CONFIG_IMA=y
+CONFIG_IMA_APPRAISE=y
+CONFIG_IMA_APPRAISE_BOOTPARAM=y
+CONFIG_IMA_ARCH_POLICY=y
+CONFIG_IMA_LSM_RULES=y
+CONFIG_IMA_MEASURE_ASYMMETRIC_KEYS=y
+CONFIG_IMA_QUEUE_EARLY_BOOT_KEYS=y
+CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT=y
+
+# security/ipe/Kconfig
+CONFIG_IPE_POLICY_SIG_PLATFORM_KEYRING=y
+CONFIG_IPE_POLICY_SIG_SECONDARY_KEYRING=y
+CONFIG_IPE_PROP_DM_VERITY=y
+CONFIG_IPE_PROP_DM_VERITY_SIGNATURE=y
+CONFIG_IPE_PROP_FS_VERITY=y
+CONFIG_IPE_PROP_FS_VERITY_BUILTIN_SIG=y
+CONFIG_SECURITY_IPE=y
+
+# security/keys/Kconfig
+CONFIG_ENCRYPTED_KEYS=y
+CONFIG_KEY_DH_OPERATIONS=y
+CONFIG_PERSISTENT_KEYRINGS=y
+
+# security/landlock/Kconfig
+CONFIG_SECURITY_LANDLOCK=y
+
+# security/lockdown/Kconfig
+CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
+CONFIG_SECURITY_LOCKDOWN_LSM=y
+CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
+

@@ -1,0 +1,7 @@
+config BR2_PACKAGE_PYTHON_PYSCARD
+	bool "python-pyscard"
+	select BR2_PACKAGE_PYTHON_TYPING_EXTENSIONS # runtime
+	help
+	  Smartcard module for Python.
+
+	  https://github.com/LudovicRousseau/pyscard

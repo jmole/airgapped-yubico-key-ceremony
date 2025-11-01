@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Key Ceremony Build <builder@example.com>
+Date: Sat, 1 Nov 2025 19:35:00 +0000
+Subject: [PATCH] pyscard: drop swig from pyproject build-system requires
+
+Avoid requiring a Python distribution named "swig" during PEP 517
+dependency resolution. Buildroot provides the SWIG binary as a host tool
+(`host-swig`), and setup.py already checks for and uses the executable.
+
+Upstream pyproject.toml:
+  [build-system]
+  requires = ["setuptools","swig"]
+
+Change to only require setuptools so builds work offline with Buildroot.
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools","swig"]
++requires = ["setuptools"]
+ build-backend = "setuptools.build_meta"
+ 
+ 
+ # isort
+

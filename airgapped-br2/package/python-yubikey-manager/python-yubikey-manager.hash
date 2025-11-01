@@ -1,0 +1,5 @@
+# md5, sha256 from https://pypi.org/pypi/yubikey-manager/json
+md5  3377af790f60d33ed194a38ecfded66b  yubikey_manager-5.8.0.tar.gz
+sha256  3af0da65e1fdd46763c94ee74e2da55a4b6e7771da776c197f5f4b4581738560  yubikey_manager-5.8.0.tar.gz
+# Locally computed sha256 checksums
+sha256  922e2aa3e87fa1c74a5aeb73836ecc4c0b36fc7c73cb8246ef96813220f008cd  COPYING
