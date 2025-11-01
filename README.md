@@ -4,27 +4,42 @@ This repository provides a Buildroot BR2_EXTERNAL tree for the air-gapped YubiKe
 
 ## Prerequisites
 
-- Buildroot checked out at `./third_party/buildroot`
-- Standard Buildroot host dependencies (see the upstream Buildroot manual)
+ - Buildroot requires a linux system, and can't be run natively on windows or macOS. Use a VM or docker container to build this.
+
+ ```
+ git clone https://github.com/jmole/airgapped-yubico-key-ceremony.git
+ cd airgapped-yubico-key-ceremony
+ git submodule update --init
+ ```
 
 ## Building the ISO image
 
 ```sh
-cd third_party/buildroot
-make BR2_EXTERNAL=../.. key_ceremony_x86_64_defconfig
-make BR2_EXTERNAL=../..
+./build.sh
 ```
 
-Buildroot places the resulting image at `output/images/rootfs.iso9660`. Flash it to removable media with a command such as:
+Once finished, the build script copies the iso to the repo root.
 
-```sh
-sudo dd if=output/images/rootfs.iso9660 of=/dev/sdX bs=4M conv=fsync status=progress
+You can use `isoinfo` to view the contents:
 ```
+isoinfo -l -i rootfs.iso9660
 
-## Customizing the image
+Directory listing of /
+d---------   0    0    0            2048 Nov  1 2025 [     20 02]  .
+d---------   0    0    0            2048 Nov  1 2025 [     20 02]  ..
+d---------   0    0    0            2048 Nov  1 2025 [     22 02]  BOOT
+----------   0    0    0            2048 Nov  1 2025 [     33 00]  BOOT.CAT;1
 
-- Run `make BR2_EXTERNAL=../.. menuconfig` to tweak configuration options.
-- Board resources (kernel fragment, GRUB configs, overlays, post-build hooks) live under `board/keyceremony/`.
-- The `key_ceremony_x86_64_defconfig` in `configs/` selects all required options, including the custom `yubico-piv-tool` package from `package/`.
+Directory listing of /BOOT/
+d---------   0    0    0            2048 Nov  1 2025 [     22 02]  .
+d---------   0    0    0            2048 Nov  1 2025 [     20 02]  ..
+----------   0    0    0        60334592 Nov  1 2025 [    620 00]  BZIMAGE.;1
+----------   0    0    0         1048576 Nov  1 2025 [     34 00]  FAT.EFI;1
+d---------   0    0    0            2048 Nov  1 2025 [     23 02]  GRUB
 
-When finished, rebuild with `make BR2_EXTERNAL=../..` to regenerate artefacts.
+Directory listing of /BOOT/GRUB/
+d---------   0    0    0            2048 Nov  1 2025 [     23 02]  .
+d---------   0    0    0            2048 Nov  1 2025 [     22 02]  ..
+----------   0    0    0             496 Nov  1 2025 [  30081 00]  GRUB.CFG;1
+----------   0    0    0          150993 Nov  1 2025 [    546 00]  GRUB_ELT.IMG;1
+```
