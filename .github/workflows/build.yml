@@ -3,7 +3,7 @@ name: Build & Release ISO (tagged)
 on:
   push:
     tags:
-      - "v*.*.*"   # e.g., v1.2.3
+      - "v*.*"   # e.g., v1.2.3
 
 permissions:
   contents: write  # required to create releases with GITHUB_TOKEN
