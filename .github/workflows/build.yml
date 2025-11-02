@@ -1,15 +1,16 @@
-name: Build ISO (airgapped-yubico-key-ceremony)
+name: Build & Release ISO (tagged)
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - "v*.*.*"   # e.g., v1.2.3
+
+permissions:
+  contents: write  # required to create releases with GITHUB_TOKEN
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out repo (with submodules)
         uses: actions/checkout@v4
@@ -23,10 +24,40 @@ jobs:
       - name: Build ISO image
         run: ./build.sh
 
+      - name: Rename ISO to .iso
+        run: |
+          if [ -f ./rootfs.iso9660 ]; then
+            mv ./rootfs.iso9660 ./rootfs.iso
+          else
+            echo "Expected ./rootfs.iso9660 not found" >&2
+            exit 1
+          fi
+
       - name: Upload ISO artifact
         uses: actions/upload-artifact@v4
         with:
-          name: iso
-          path: |
-            ./rootfs.iso9660
+          name: iso          # artifact bundle name
+          path: ./rootfs.iso # actual file to upload
           if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download ISO artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: iso
+          path: .            # put it in the workspace root
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: ./rootfs.iso
+          body: "Automated release for tag **${{ github.ref_name }}**"
+          draft: false
+          prerelease: false
