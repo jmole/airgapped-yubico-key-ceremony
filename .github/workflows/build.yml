@@ -1,12 +1,15 @@
-name: Build & Release ISO (tagged)
+name: Build & Release ISO (tagged or on-demand)
 
 on:
-  push:
-    tags:
-      - "v*.*"   # e.g., v1.2.3
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to build (e.g., v0.1)"
+        required: true
+        type: string
 
 permissions:
-  contents: write  # required to create releases with GITHUB_TOKEN
+  contents: write  # needed to create releases and (if needed) create tags
 
 jobs:
   build:
@@ -17,6 +20,10 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+          # If manual run, build the specified tag; otherwise use the pushed ref.
+          ref: ${{ github.event_name == 'workflow_dispatch'
+                   && format('refs/tags/{0}', inputs.tag)
+                   || github.ref }}
 
       - name: Ensure build script is executable
         run: chmod +x build.sh
@@ -36,8 +43,8 @@ jobs:
       - name: Upload ISO artifact
         uses: actions/upload-artifact@v4
         with:
-          name: iso          # artifact bundle name
-          path: ./rootfs.iso # actual file to upload
+          name: iso
+          path: ./rootfs.iso
           if-no-files-found: error
 
   release:
@@ -50,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: iso
-          path: .            # put it in the workspace root
+          path: .
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
@@ -58,6 +65,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: ./rootfs.iso
-          body: "Automated release for tag **${{ github.ref_name }}**"
+          # On manual runs, release the input tag; on push, use the pushed tag.
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          body: "Automated release for tag **${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}**"
           draft: false
           prerelease: false
